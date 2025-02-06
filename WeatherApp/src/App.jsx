@@ -346,24 +346,28 @@ function App() {
 
   return (
     <>
-      <div>
-        <h1 className='font-bold mb-5'>WEATHER APP</h1>
-        <input type='text' className='w-[250px] bg-emerald-500/10 border-2 border-emerald-500 rounded-lg mr-3 p-1' value={city} placeholder='Ingrese su ciudad' onChange={(e) => setCity(e.target.value)} required></input>
-        <button className='cursor-pointer bg-blue-500 p-1 rounded-lg text-xs hover:bg-green-700' onClick={getWeather}>Consultar</button>
+      <div className='p-1'>
+        <div className='mb-2'>
+          <h1 className='font-bold text-2xl md:text-3xl lg:text-4xl mb-2 lg:text-center'>WEATHER APP</h1>
+          <div className='flex flex-col md:flex-row gap-3 lg:justify-center'>
+            <input type='text' className='w-full md:w-[250px] bg-emerald-500/10 border-2 border-emerald-500 rounded-lg p-1' value={city} placeholder='Ingrese su ciudad' onChange={(e) => setCity(e.target.value)} required></input>
+            <button className='cursor-pointer bg-blue-500 p-2 rounded-lg text-sm md:text-xs hover:bg-green-700' onClick={getWeather}>Consultar</button>
+          </div>
+        </div>
       </div>
       <div>
         {weather && forecast && (
-          <div className="grid grid-cols-2 gap-4 p-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="flex flex-col gap-4">
               <div className="bg-sky-500/10 p-4 rounded-lg">
-                <div className='flex items-center justify-between'>
+                <div className='flex flex-col md:flex-row items-center justify-between'>
                   <div className='flex items-center'>
                     <p className='text-2xl font-bold'> {weather.location.name}, {weather.location.country}</p>
                     {country.length > 0 && (
                       <img
                         src={country[0].flags.png}
                         alt={`Bandera de ${country[0].name.common}`}
-                        className='w-[30px] ml-[10px] mt-1'
+                        className='w-[30px] ml-2 mt-1'
                       />
                     )}
                   </div>
@@ -372,15 +376,15 @@ function App() {
                     'https://i.postimg.cc/1XKRxH2N/day-forecast-hot-svgrepo-com.png' : 
                     'https://i.postimg.cc/QNgdW8Cx/night-software-star-svgrepo-com.png'}
                     alt='Icono del dia/noche'
-                    className='w-[50px] ml-[30px]'
+                    className='w-[50px] mt-4 md:mt-0'
                   />
                 </div>
-                <div className='flex items-center gap-5'>
+                <div className='flex flex-col md:flex-row items-center gap-5 mt-4'>
                   <div className='text-left'>
                     <p>Latitud: {weather.location.lat}</p>
                     <p>Longitud: {weather.location.lon}</p>
                   </div>
-                  <div className='text-left ml-10'>
+                  <div className='text-left'>
                     <p>{hour} hrs</p>
                     <p>{date}</p>
                   </div>
@@ -388,13 +392,13 @@ function App() {
               </div>
               <div className="bg-green-500/10 p-4 rounded-lg">
               <p className='text-4xl font-bold flex items-center'>{status}</p>
-              <div className='flex items-center gap-5 mt-3'>
-                <p className='flex items-start text-2xl font-bold'>{temperature}</p>
+              <div className='flex flex-col md:flex-row items-center gap-5 mt-3'>
+                <p className='text-2xl font-bold'>{temperature}</p>
                 <button className='p-2 text-xs rounded-xl border-dashed bg-blue-950 cursor-pointer' onClick={change}>{buttonText}</button>
               </div>
-              <div className='flex items-center gap-5'>
+              <div className='flex flex-col md:flex-row items-center gap-5 mt-4'>
                 <img src={weather.current.condition.icon} className='w-[150px] h-[150px] object-contain' alt='weather icon' />
-                <div className='flex items-center gap-5 ml-5'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                   <div>
                     <div className='flex items-center mb-5'>
                       <img src='https://i.postimg.cc/8k6kpm48/rain-storm-svgrepo-com.png' className='w-[30px] mr-2'/>
@@ -417,98 +421,74 @@ function App() {
                   </div>
                 </div>
               </div>
-              <div className='flex justify-between'>
-                <p className='text-xs mt-9'>Datos proporcionados por Weather API</p>
-                <p className='text-xs mt-9'>Última Actualización: {weather.current.last_updated}</p>
+              <div className='flex flex-col md:flex-row justify-between mt-6'>
+                <p className='text-xs'>Datos proporcionados por Weather API</p>
+                <p className='text-xs'>Última Actualización: {weather.current.last_updated}</p>
               </div>
               </div>
             </div>
             <div className="bg-yellow-500/10 p-4 rounded-lg">
-              <h2 className="text-xl font-bold">Pronósticos</h2>
-              <div className='bg-indigo-500/10 mt-2 mb-3 p-2 rounded-lg'>
-                <div className='flex justify-between'> 
-                  <p className='text-lg font-bold ml-2'>{getStatus(forecast.forecast.forecastday[0].day.condition.code)}</p>
-                  <p className='italic mr-2'>{changeFormatDate(forecast.forecast.forecastday[0].date)}</p>
-                </div>
-                <div className='flex items-center ml-2'> 
-                  <img src={forecast.forecast.forecastday[0].day.condition.icon} className='w-[80px]'/>
-                  <p className='text-4xl font-bold'>{forecast.forecast.forecastday[0].day.maxtemp_c}°</p>
-                  <p className='text-base ml-1 mt-5 text-gray-600 dark:text-red-50'>/{forecast.forecast.forecastday[0].day.mintemp_c}°</p>
-                  <div className='ml-15'>
-                    <div className='flex items-center gap-1 mb-2'> 
-                      <img src='https://i.postimg.cc/FRc4xkj6/sun-svgrepo-com.png' className='w-[20px]'/>
-                      <p className='text-[10px]'>Índice UV: {forecast.forecast.forecastday[0].day.uv}</p>
-                    </div>
-                    <div className='flex items-center gap-1 mb-2'> 
-                      <img src='https://i.postimg.cc/4NfDYSFq/rain-water-svgrepo-com.png' className='w-[20px]'/>
-                      <p className='text-[10px]'>Prob. Lluvia: {forecast.forecast.forecastday[0].day.daily_chance_of_rain}%</p>
-                    </div>
-                    <div className='flex items-center gap-1'> 
-                      <img src='https://i.postimg.cc/SNgwCfBs/snow-svgrepo-com.png' className='w-[20px]'/>
-                      <p className='text-[10px]'>Prob. Nieve: {forecast.forecast.forecastday[0].day.daily_chance_of_snow}%</p>
+              <h2 className="text-xl font-bold mb-4">Pronósticos</h2>
+              {forecast.forecast.forecastday.map((day, index) => (
+                <div
+                  key={index}
+                  className="bg-indigo-500/10 mt-2 mb-3 p-2 rounded-lg"
+                >
+                  <div className="flex justify-between">
+                    <p className="text-lg font-bold ml-2">
+                      {getStatus(day.day.condition.code)}
+                    </p>
+                    <p className="italic mr-2">{changeFormatDate(day.date)}</p>
+                  </div>
+                  <div className="flex flex-col md:flex-row items-center ml-2">
+                    <img
+                      src={day.day.condition.icon}
+                      className="w-[80px]"
+                      alt="weather icon"
+                    />
+                    <p className="text-4xl font-bold">{day.day.maxtemp_c}°</p>
+                    <p className="text-base ml-1 mt-1 mb-3 text-gray-600 dark:text-red-50">
+                      /{day.day.mintemp_c}°
+                    </p>
+                    <div className="ml-4">
+                      <div className="flex items-center gap-1 mb-2">
+                        <img
+                          src="https://i.postimg.cc/FRc4xkj6/sun-svgrepo-com.png"
+                          className="w-[20px]"
+                        />
+                        <p className="text-[10px]">Índice UV: {day.day.uv}</p>
+                      </div>
+                      <div className="flex items-center gap-1 mb-2">
+                        <img
+                          src="https://i.postimg.cc/4NfDYSFq/rain-water-svgrepo-com.png"
+                          className="w-[20px]"
+                        />
+                        <p className="text-[10px]">
+                          Prob. Lluvia: {day.day.daily_chance_of_rain}%
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <img
+                          src="https://i.postimg.cc/SNgwCfBs/snow-svgrepo-com.png"
+                          className="w-[20px]"
+                        />
+                        <p className="text-[10px]">
+                          Prob. Nieve: {day.day.daily_chance_of_snow}%
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className='bg-indigo-500/10 mt-2 mb-3 p-2 rounded-lg'>
-                <div className='flex justify-between'> 
-                  <p className='text-lg font-bold ml-2'>{getStatus(forecast.forecast.forecastday[1].day.condition.code)}</p>
-                  <p className='italic mr-2'>{changeFormatDate(forecast.forecast.forecastday[1].date)}</p>
-                </div>
-                <div className='flex items-center ml-2'> 
-                  <img src={forecast.forecast.forecastday[1].day.condition.icon} className='w-[80px]'/>
-                  <p className='text-4xl font-bold'>{forecast.forecast.forecastday[1].day.maxtemp_c}°</p>
-                  <p className='text-base ml-1 mt-5 text-gray-600 dark:text-red-50'>/{forecast.forecast.forecastday[1].day.mintemp_c}°</p>
-                  <div className='ml-15'>
-                    <div className='flex items-center gap-1 mb-2'> 
-                      <img src='https://i.postimg.cc/FRc4xkj6/sun-svgrepo-com.png' className='w-[20px]'/>
-                      <p className='text-[10px]'>Índice UV: {forecast.forecast.forecastday[1].day.uv}</p>
-                    </div>
-                    <div className='flex items-center gap-1 mb-2'> 
-                      <img src='https://i.postimg.cc/4NfDYSFq/rain-water-svgrepo-com.png' className='w-[20px]'/>
-                      <p className='text-[10px]'>Prob. Lluvia: {forecast.forecast.forecastday[1].day.daily_chance_of_rain}%</p>
-                    </div>
-                    <div className='flex items-center gap-1'> 
-                      <img src='https://i.postimg.cc/SNgwCfBs/snow-svgrepo-com.png' className='w-[20px]'/>
-                      <p className='text-[10px]'>Prob. Nieve: {forecast.forecast.forecastday[1].day.daily_chance_of_snow}%</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className='bg-indigo-500/10 mt-2 p-2 rounded-lg'>
-                <div className='flex justify-between'> 
-                  <p className='text-lg font-bold ml-2'>{getStatus(forecast.forecast.forecastday[2].day.condition.code)}</p>
-                  <p className='italic mr-2'>{changeFormatDate(forecast.forecast.forecastday[2].date)}</p>
-                </div>
-                <div className='flex items-center ml-2'> 
-                  <img src={forecast.forecast.forecastday[2].day.condition.icon} className='w-[80px]'/>
-                  <p className='text-4xl font-bold'>{forecast.forecast.forecastday[2].day.maxtemp_c}°</p>
-                  <p className='text-base ml-1 mt-5 text-gray-600 dark:text-red-50'>/{forecast.forecast.forecastday[2].day.mintemp_c}°</p>
-                  <div className='ml-15'>
-                    <div className='flex items-center gap-1 mb-2'> 
-                      <img src='https://i.postimg.cc/FRc4xkj6/sun-svgrepo-com.png' className='w-[20px]'/>
-                      <p className='text-[10px]'>Índice UV: {forecast.forecast.forecastday[2].day.uv}</p>
-                    </div>
-                    <div className='flex items-center gap-1 mb-2'> 
-                      <img src='https://i.postimg.cc/4NfDYSFq/rain-water-svgrepo-com.png' className='w-[20px]'/>
-                      <p className='text-[10px]'>Prob. Lluvia: {forecast.forecast.forecastday[2].day.daily_chance_of_rain}%</p>
-                    </div>
-                    <div className='flex items-center gap-1'> 
-                      <img src='https://i.postimg.cc/SNgwCfBs/snow-svgrepo-com.png' className='w-[20px]'/>
-                      <p className='text-[10px]'>Prob. Nieve: {forecast.forecast.forecastday[2].day.daily_chance_of_snow}%</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         )}
       </div>
-      <div className='flex'>
-        <p className='font-bold ml-110'>👽Creado por JeanLucasOFM👽</p>
-        <div className='flex ml-80'>
-          <a href='https://github.com/JeanLucasOFM18' target='_block'><img src='https://i.postimg.cc/qgVKb5ZT/github-color-svgrepo-com.png' className='w-[25px] h-[25px] mr-2'/></a>
-          <a href='https://www.linkedin.com/in/jean-lucas-rivera-rodr%C3%ADguez/' target='_block'><img src='https://i.postimg.cc/BQmL1tJ3/linkedin-svgrepo-com.png' className='w-[25px] h-[25px]'/></a>
+      <div className='flex flex-col md:flex-row justify-between items-center mt-3'>
+        <p className='font-bold text-xs'>👽Creado por JeanLucasOFM👽</p>
+        <div className='flex gap-1 mt-4 md:mt-0'>
+          <a href='https://github.com/JeanLucasOFM18' target='_block'><img src='https://i.postimg.cc/qgVKb5ZT/github-color-svgrepo-com.png' className='w-[20px] h-[20px] mr-2' alt='GitHub'/></a>
+          <a href='https://www.linkedin.com/in/jean-lucas-rivera-rodr%C3%ADguez/' target='_block'><img src='https://i.postimg.cc/BQmL1tJ3/linkedin-svgrepo-com.png' className='w-[20px] h-[20px]' alt='Linkedin'/></a>
         </div>
       </div>
     </>
