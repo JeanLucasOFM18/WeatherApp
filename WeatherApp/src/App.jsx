@@ -402,21 +402,21 @@ function App() {
                   <div>
                     <div className='flex items-center mb-5'>
                       <img src='https://i.postimg.cc/8k6kpm48/rain-storm-svgrepo-com.png' className='w-[30px] mr-2'/>
-                      <p>Humedad: {weather.current.humidity}</p>
+                      <p>Humedad: {weather.current.humidity}%</p>
                     </div>
                     <div className='flex items-center'>
                       <img src='https://i.postimg.cc/SsV5LsWb/pressure-svgrepo-com.png' className='w-[30px] mr-2'/>
-                      <p>Presión: {weather.current.pressure_mb}</p>
+                      <p>Presión: {weather.current.pressure_mb}mb</p>
                     </div>
                   </div>
                   <div>
                     <div className='flex items-center mb-5'>
                       <img src='https://i.postimg.cc/sDtVG6j9/rain-svgrepo-com.png' className='w-[30px] mr-2'/>
-                      <p>Precipitaciones: {weather.current.precip_mm}</p> 
+                      <p>Precipitaciones: {weather.current.precip_mm}mm</p> 
                     </div>
                     <div className='flex items-center'>
                       <img src='https://i.postimg.cc/SxCm66j0/wind-svgrepo-com.png' className='w-[30px] mr-2'/>
-                      <p>Vel. Viento: {weather.current.wind_kph}</p>
+                      <p>Vel. Viento: {weather.current.wind_kph}km/h</p>
                     </div>
                   </div>
                 </div>
@@ -446,9 +446,9 @@ function App() {
                       className="w-[80px]"
                       alt="weather icon"
                     />
-                    <p className="text-4xl font-bold">{day.day.maxtemp_c}°</p>
+                    <p className="text-4xl font-bold">{day.day.maxtemp_c}°C</p>
                     <p className="text-base ml-1 mt-1 mb-3 text-gray-600 dark:text-red-50">
-                      /{day.day.mintemp_c}°
+                      /{day.day.mintemp_c}°C
                     </p>
                     <div className="ml-4">
                       <div className="flex items-center gap-1 mb-2">
